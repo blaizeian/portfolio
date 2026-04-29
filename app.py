@@ -13,11 +13,15 @@ load_dotenv()
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=["https://blaizeian.github.io"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+@app.post("/send-email")
+async def send_email(data: dict):
+    # your existing email code here
+    return {"status": "success"}
 
 # Initialize Database
 init_db()
