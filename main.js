@@ -45,6 +45,7 @@ if (form) {
             email: form.querySelector('input[type="email"]').value,
             message: form.querySelector('textarea').value
         };
+        
 
         try {
             const response = await fetch('https://portfolio-backend-zhwg.onrender.com', {
