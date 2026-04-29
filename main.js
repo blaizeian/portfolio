@@ -50,7 +50,7 @@ if (form) {
             });
 
             if (response.ok) {
-                btn.innerText = 'Transmission Successful';
+                btn.innerText = 'sent!';
                 btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
                 form.reset();
 
