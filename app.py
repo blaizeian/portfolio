@@ -6,6 +6,8 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from email.mime.text import MIMEText
 from database import init_db, save_message 
+import resend
+resend.api_key = "re_FTBFD9g5_JiUexa7bZj9gn9pNpiFEZqua"
 
 # Load credentials
 load_dotenv()
@@ -29,46 +31,39 @@ class ContactForm(BaseModel):
     name: str
     email: str
     message: str
+# Add this to your imports at the top
 
-# 3. THE SINGLE ENDPOINT
+# Set your API Key
+
+
 @app.post("/send-email")
 async def send_contact_email(form: ContactForm):
-    # A. SAVE TO DATABASE
+    # 1. SAVE TO DATABASE
     try:
         save_message(form.name, form.email, form.message)
     except Exception as db_err:
         print(f"Database Error: {db_err}")
 
-    # B. PREPARE EMAIL
-    sender_email = os.getenv("EMAIL_USER")
-    password = os.getenv("EMAIL_PASS")
-
-    if not sender_email or not password:
-        print("Error: EMAIL_USER or EMAIL_PASS not set in environment variables.")
-        raise HTTPException(status_code=500, detail="Server missing credentials")
-
-    msg = MIMEText(f"Name: {form.name}\nEmail: {form.email}\n\n{form.message}")
-    msg['Subject'] = f"New Portfolio Contact from {form.name}"
-    msg['From'] = sender_email
-    msg['To'] = sender_email
-
-    # C. SEND EMAIL
-    # 3. SEND EMAIL
+    # 2. SEND VIA RESEND API
     try:
-        # Changed from SMTP_SSL to regular SMTP
-        with smtplib.SMTP("smtp.gmail.com", 587) as server:
-            server.ehlo()
-            server.starttls() # This secures the connection
-            server.ehlo()
-            server.login(sender_email, password)
-            server.sendmail(sender_email, sender_email, msg.as_string())
-        return {"status": "success", "message": "Message saved and email sent!"}
+        params = {
+            "from": "onboarding@resend.dev", # Resend's default test email
+            "to": "your-email@gmail.com",    # Where YOU want to receive the mail
+            "subject": f"New Portfolio Message from {form.name}",
+            "html": f"""
+                <p><strong>Name:</strong> {form.name}</p>
+                <p><strong>Email:</strong> {form.email}</p>
+                <p><strong>Message:</strong> {form.message}</p>
+            """,
+        }
+        
+        resend.Emails.send(params)
+        return {"status": "success", "message": "Sent via Resend!"}
+        
     except Exception as e:
-        print(f"Email Error: {e}")
-        # We return 200 because the database part ALREADY worked!
-        # This prevents the frontend from showing a scary error if just the email fails
-        return {"status": "success", "message": "Message saved (Email failed to send)"}
-
+        print(f"Resend Error: {e}")
+        return {"status": "success", "message": "Saved to DB, but Resend failed."}
+    
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
