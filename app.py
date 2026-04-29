@@ -6,8 +6,10 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from email.mime.text import MIMEText
 from database import init_db, save_message 
-import resend
-resend.api_key = "re_FTBFD9g5_JiUexa7bZj9gn9pNpiFEZqua"
+import resend # type: ignore
+resend.api_key = os.getenv("RESEND_API_KEY")
+MY_EMAIL = os.getenv("MY_EMAIL")
+#resend.api_key = "re_FTBFD9g5_JiUexa7bZj9gn9pNpiFEZqua"
 
 # Load credentials
 load_dotenv()
@@ -47,22 +49,16 @@ async def send_contact_email(form: ContactForm):
     # 2. SEND VIA RESEND API
     try:
         params = {
-            "from": "onboarding@resend.dev", # Resend's default test email
-            "to": "your-email@gmail.com",    # Where YOU want to receive the mail
+            "from": "onboarding@resend.dev",
+            "to": MY_EMAIL,  # This now uses the secret from Render
             "subject": f"New Portfolio Message from {form.name}",
-            "html": f"""
-                <p><strong>Name:</strong> {form.name}</p>
-                <p><strong>Email:</strong> {form.email}</p>
-                <p><strong>Message:</strong> {form.message}</p>
-            """,
+            "html": f"<p><strong>Name:</strong> {form.name}</p><p>{form.message}</p>"
         }
-        
         resend.Emails.send(params)
-        return {"status": "success", "message": "Sent via Resend!"}
-        
+        return {"status": "success", "message": "Email sent!"}
     except Exception as e:
         print(f"Resend Error: {e}")
-        return {"status": "success", "message": "Saved to DB, but Resend failed."}
+        return {"status": "success", "message": "Saved to DB, but email failed."}
     
 if __name__ == "__main__":
     import uvicorn
