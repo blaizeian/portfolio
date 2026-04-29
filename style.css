@@ -20,7 +20,7 @@
 body {
     background: linear-gradient(270deg, #020617, #0f172a, #9ea1a2);
     background-size: 400% 400%;
-    animation: gradientMove 40s ease infinite;
+    animation: gradientMove 40s ease 1 forwards;
     color: var(--text-main);
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
@@ -30,11 +30,11 @@ body {
 /* Background Glow Effect */
 .bg-glow {
     position: fixed;
-    top: -10%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, var(--accent-glow) 0%, rgba(2, 6, 23, 0) 70%);
+    top: -15%;
+    right: -15%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.05), rgba(2, 6, 23, 0) 70%);
     z-index: -1;
     pointer-events: none;
 }
@@ -181,8 +181,8 @@ button:hover, .btn:hover {
 /* Background Effects */
 @keyframes gradientMove {
     0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  
+    100% { background-position: 100% 50%; }
 }
 
 /* Button Ripple Effect */
