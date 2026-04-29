@@ -57,7 +57,9 @@ async def send_contact_email(form: ContactForm):
     try:
         # Changed from SMTP_SSL to regular SMTP
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.ehlo()
             server.starttls() # This secures the connection
+            server.ehlo()
             server.login(sender_email, password)
             server.sendmail(sender_email, sender_email, msg.as_string())
         return {"status": "success", "message": "Message saved and email sent!"}
