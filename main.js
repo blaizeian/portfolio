@@ -40,12 +40,7 @@ if (form) {
         btn.innerText = 'Initializing Transmission...';
         btn.disabled = true;
 
-        const formData = {
-            name: form.querySelector('input[type="text"]').value,
-            email: form.querySelector('input[type="email"]').value,
-            message: form.querySelector('textarea').value
-        };
-
+        c
 
         try {
             const response = await fetch('https://portfolio-backend-zhwg.onrender.com/send-email', {

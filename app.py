@@ -18,10 +18,30 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+#@app.post("/send-email")
+#async def send_email(data: dict):
+    # your existing email code here
+ #   return {"status": "success"}
 @app.post("/send-email")
 async def send_email(data: dict):
-    # your existing email code here
-    return {"status": "success"}
+    try:
+        # 1. This part does the actual work (saving to DB)
+        # Make sure 'save_message' is imported from your database.py
+        from database import save_message 
+        
+        save_message(
+            data.get("name"), 
+            data.get("email"), 
+            data.get("message")
+        )
+
+        # 2. This part sends the 'Success' signal back to your website
+        return {"status": "success", "message": "Message saved to database!"}
+
+    except Exception as e:
+        # If something breaks (like the DB connection), this tells you why
+        print(f"Error: {e}")
+        return {"status": "error", "message": str(e)}, 500
 
 # Initialize Database
 init_db()
