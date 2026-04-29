@@ -38,7 +38,7 @@ if (form) {
         const originalText = btn.innerText;
         const originalGradient = window.getComputedStyle(btn).background;
 
-        btn.innerText = 'Initializing Transmission...';
+        btn.innerText = 'sending...';
         btn.disabled = true;
 
         try {
