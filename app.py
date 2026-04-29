@@ -53,15 +53,19 @@ async def send_contact_email(form: ContactForm):
     msg['To'] = sender_email
 
     # C. SEND EMAIL
+    # 3. SEND EMAIL
     try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        # Changed from SMTP_SSL to regular SMTP
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls() # This secures the connection
             server.login(sender_email, password)
             server.sendmail(sender_email, sender_email, msg.as_string())
         return {"status": "success", "message": "Message saved and email sent!"}
     except Exception as e:
         print(f"Email Error: {e}")
-        # We still return success if the DB part worked, or 500 if everything failed
-        raise HTTPException(status_code=500, detail="Failed to send email")
+        # We return 200 because the database part ALREADY worked!
+        # This prevents the frontend from showing a scary error if just the email fails
+        return {"status": "success", "message": "Message saved (Email failed to send)"}
 
 if __name__ == "__main__":
     import uvicorn
