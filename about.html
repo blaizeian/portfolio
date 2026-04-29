@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Contact</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">DEVEL[OP]ER</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="about.html" class="active">About</a>
+            </div>
+        </nav>
+
+        <div class="grid-2col">
+            <section>
+                <h2 style="margin-bottom: 1.5rem;">The Engineer</h2>
+                <p style="color: var(--text-dim); margin-bottom: 2rem;">
+                    I bridge the gap between complex backend logic and intuitive user experiences. Currently a CS student, I spend my time optimizing algorithms and building tools that automate the mundane.
+                </p>
+
+                <div class="skills-group">
+                    <h4>Languages</h4>
+                    <div class="skill-tags">
+                        <span class="tag">JavaScript (ES6+)</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Go</span>
+                        <span class="tag">SQL</span>
+                    </div>
+                </div>
+
+                <div class="skills-group">
+                    <h4>Problem Solving</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-dim);">
+                        My approach: **Observe** the bottleneck, **Isolate** the variables, and **Iterate** the solution. I prioritize maintainability over "clever" code.
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2 style="margin-bottom: 1.5rem;">Get in Touch</h2>
+                <form id="contact-form" onsubmit="return false;">
+                    <div style="margin-bottom: 1rem;">
+                        <label for="name" style="display: block; margin-bottom: 0.5rem;">Name</label>
+                        <input type="text" id="name" placeholder="Your Name" required style="width: 100%; padding: 0.5rem;">
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <label for="email" style="display: block; margin-bottom: 0.5rem;">Email</label>
+                        <input type="email" id="email" placeholder="Your Email" required style="width: 100%; padding: 0.5rem;">
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <label for="message" style="display: block; margin-bottom: 0.5rem;">Message</label>
+                        <textarea id="message" rows="5" placeholder="Your Message" required style="width: 100%; padding: 0.5rem;"></textarea>
+                    </div>
+
+                    <button type="button" id="contact-form-submit" class="btn btn-primary" style="padding: 0.75rem 1.5rem;">Send Message</button>
+                </form>
+                <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                    <a href="#" style="color: var(--text-dim);">LinkedIn</a>
+                    <a href="#" style="color: var(--text-dim);">GitHub</a>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
