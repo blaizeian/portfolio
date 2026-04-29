@@ -6,7 +6,7 @@
     --text-main: #f8fafc;   /* Frost White */
     --text-dim: #94a3b8;    /* Muted Slate */
     --accent: #00d4ff;      /* Electric Cyan */
-    --accent-glow: rgba(0, 212, 255, 0.2);
+    --accent-glow: rgba(0, 212, 255, 0.1);
     --border: #1e293b;      /* Navy Stroke */
     --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -18,9 +18,9 @@
 }
 
 body {
-    background: linear-gradient(270deg, #020617, #0f172a, #00d4ff);
+    background: linear-gradient(270deg, #020617, #0f172a, #9ea1a2);
     background-size: 400% 400%;
-    animation: gradientMove 15s ease infinite;
+    animation: gradientMove 40s ease infinite;
     color: var(--text-main);
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
