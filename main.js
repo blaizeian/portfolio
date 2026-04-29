@@ -19,41 +19,39 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.transform = "translateY(30px)";
         card.style.transition = "all 0.8s ease-out";
         observer.observe(card);
-    });
-// --- PART 2: CONTACT FORM LOGIC ---
+    });// --- PART 2: CONTACT FORM LOGIC ---
 const form = document.getElementById('contact-form');
 const submitBtn = document.getElementById('contact-form-submit'); 
 
 if (form) {
     submitBtn.addEventListener('click', async (e) => {
         e.preventDefault();
-        console.log('Form submission prevented');
-        console.log('Form is being submitted');
+        
+        // --- ADDED THIS: Capture the data from the inputs ---
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+        };
 
         const btn = form.querySelector('button');
-        
-        // 1. CAPTURE original state BEFORE we change anything
         const originalText = btn.innerText;
         const originalGradient = window.getComputedStyle(btn).background;
 
-        // 2. IMMEDIATE UI FEEDBACK
         btn.innerText = 'Initializing Transmission...';
         btn.disabled = true;
 
-        c
-
         try {
+            // Ensure this URL matches your Render URL + /send-email
             const response = await fetch('https://portfolio-backend-zhwg.onrender.com/send-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData) // Now formData actually exists!
             });
 
             if (response.ok) {
-                // 3. SUCCESS STATE
                 btn.innerText = 'Transmission Successful';
                 btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-                console.log('Email sent successfully');
                 form.reset();
 
                 setTimeout(() => {
@@ -65,7 +63,6 @@ if (form) {
                 throw new Error('Server Error');
             }
         } catch (error) {
-            // 4. ERROR STATE
             console.error("Backend connection failed:", error);
             btn.innerText = 'Connection Failed';
             btn.style.background = '#ef4444';
