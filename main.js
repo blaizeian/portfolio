@@ -38,7 +38,7 @@ if (form) {
         const originalText = btn.innerText;
         const originalGradient = window.getComputedStyle(btn).background;
 
-        btn.innerText = 'sending...';
+        btn.innerText = 'sending...just a moment...';
         btn.disabled = true;
 
         try {
