@@ -20,7 +20,7 @@
 body {
     background: linear-gradient(270deg, #020617, #0f172a, #9ea1a2);
     background-size: 400% 400%;
-    animation: gradientMove 40s ease 1 forwards;
+    animation: gradientMove 10s ease 1 forwards;
     color: var(--text-main);
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
